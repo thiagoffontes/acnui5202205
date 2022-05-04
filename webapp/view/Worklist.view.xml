@@ -70,6 +70,9 @@
                                     priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
+
+                        <Button text="{i18n>btnExport}" icon="sap-icon://excel-attachment" press="onExport"/>
+
                     </OverflowToolbar>
                 </headerToolbar>
 

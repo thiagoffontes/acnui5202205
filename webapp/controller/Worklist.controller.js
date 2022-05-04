@@ -3,9 +3,13 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/export/Spreadsheet",
+    "sap/ui/export/library"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Spreadsheet, exportLibrary) {
     "use strict";
+
+    var EdmType = exportLibrary.EdmType;
 
     return BaseController.extend("categories.controller.Worklist", {
 
@@ -89,6 +93,45 @@ sap.ui.define([
         onNavBack : function() {
             // eslint-disable-next-line sap-no-history-manipulation
             history.go(-1);
+        },
+
+        createColumnConfig: function(){
+			var aCols = [];
+            aCols.push({
+				property: "ID",
+				type: EdmType.String
+			});
+            aCols.push({
+				property: "Name",
+				type: EdmType.String
+			});
+            return aCols;
+        },
+
+        onExport: function(){
+            var aCols, oRowBinding, oSettings, oSheet, oTable;
+
+			if (!this._oTable) {
+				this._oTable = this.byId("table");
+			}
+
+			oTable = this._oTable;
+			oRowBinding = oTable.getBinding("items");
+			aCols = this.createColumnConfig();
+
+			oSettings = {
+				workbook: {
+					columns: aCols
+				},
+				dataSource: oRowBinding,
+				fileName: "export.xlsx",
+				worker: false
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build().finally(function() {
+				oSheet.destroy();
+			});
         },
 
 
