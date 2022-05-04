@@ -25,6 +25,23 @@
             <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
         </semantic:sendEmailAction>
 
+        <semantic:content>
+            <Panel>
+                <VBox>
+                    <Label text="{i18n>labelId}"/>
+                    <Input width="200px"/>
+                    <Label text="{i18n>labelName}"/>
+                    <Input width="200px"/>
+
+                    <Button text="{i18n>btnCriar}" press="onCriar"/>
+                    <Button text="{i18n>btnEditar}" press="onEditar"/>
+                    <Button text="{i18n>btnSalvar}" press="onSalvar"/>
+                    <Button text="{i18n>btnExcluir}" press="onExcluir"/>
+                </VBox>
+            </Panel>
+        
+        </semantic:content>
+
     </semantic:SemanticPage>
 
 </mvc:View>

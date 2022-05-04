@@ -73,6 +73,8 @@
 
                         <Button text="{i18n>btnExport}" icon="sap-icon://excel-attachment" press="onExport"/>
 
+                        <Button text="{i18n>btnCriar}" icon="sap-icon://add" press="onCriar"/>
+
                     </OverflowToolbar>
                 </headerToolbar>
 
