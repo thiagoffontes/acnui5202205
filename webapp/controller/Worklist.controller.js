@@ -93,28 +93,24 @@ sap.ui.define([
 
 
         onSearch : function (oEvent) {
-
             var oFilters = this.getModel("filterModel").getData();
 
             debugger;
 
+            var aFilters = [];
 
-            // if (oEvent.getParameters().refreshButtonPressed) {
-            //     // Search field's 'refresh' button has been pressed.
-            //     // This is visible if you select any main list item.
-            //     // In this case no new search is triggered, we only
-            //     // refresh the list binding.
-            //     this.onRefresh();
-            // } else {
-            //     var aTableSearchState = [];
-            //     var sQuery = oEvent.getParameter("query");
+            if (oFilters.ID) {
+                var oIdFilter = new Filter("ID", FilterOperator.EQ, oFilters.ID);
+                aFilters.push(oIdFilter);
+            }
 
-            //     if (sQuery && sQuery.length > 0) {
-            //         aTableSearchState = [new Filter("ID", FilterOperator.Contains, sQuery)];
-            //     }
-            //     this._applySearch(aTableSearchState);
-            // }
-
+            if (oFilters.Name){
+                var oNameFilter = new Filter("Name", FilterOperator.Contains, oFilters.Name);
+                aFilters.push(oNameFilter);
+            }
+ 
+            this._applySearch(aFilters);
+            
         },
 
         /**
