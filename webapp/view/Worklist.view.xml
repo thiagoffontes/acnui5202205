@@ -2,6 +2,7 @@
     controllerName="categories.controller.Worklist"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
     xmlns:semantic="sap.f.semantic">
 
     <semantic:SemanticPage
@@ -14,6 +15,26 @@
                 text="{i18n>worklistTitle}"
                 level="H2"/>
         </semantic:titleHeading>
+
+        <semantic:headerContent>
+            <fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true">
+			    <fb:filterGroupItems>
+                
+                    <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A1" label="{i18n>labelId}" visibleInFilterBar="true">
+                        <fb:control>
+                            <Input type="Text"/>
+                        </fb:control>
+				    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A2" label="{i18n>labelName}" visibleInFilterBar="true">
+                        <fb:control>
+                            <Input type="Text"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </semantic:headerContent>
 
         <semantic:content>
             <Table
