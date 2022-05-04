@@ -19,16 +19,16 @@
         <semantic:headerContent>
             <fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true">
 			    <fb:filterGroupItems>
-                
+
                     <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A1" label="{i18n>labelId}" visibleInFilterBar="true">
                         <fb:control>
-                            <Input type="Text"/>
+                            <Input type="Text" value="{filterModel>/ID}"/>
                         </fb:control>
 				    </fb:FilterGroupItem>
 
                     <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A2" label="{i18n>labelName}" visibleInFilterBar="true">
                         <fb:control>
-                            <Input type="Text"/>
+                            <Input type="Text" value="{filterModel>/Name}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
 
