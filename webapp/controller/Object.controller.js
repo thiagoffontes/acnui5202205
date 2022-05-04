@@ -28,6 +28,22 @@ sap.ui.define([
                 });
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
             this.setModel(oViewModel, "objectView");
+
+            
+            var oObjectModel = new JSONModel({
+                idValue : "",
+                idEditable : false,
+                nameValue : "",
+                nameEditable : false,
+
+                btnCriarVisible : false,
+                btnEditarVisible : false,
+                btnSalvarVisible : false,
+                btnExcluirVisible : false
+            });
+
+            this.setModel(oObjectModel, "objectModel");
+
         },
         /* =========================================================== */
         /* event handlers                                              */

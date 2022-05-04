@@ -29,14 +29,14 @@
             <Panel>
                 <VBox>
                     <Label text="{i18n>labelId}"/>
-                    <Input width="200px"/>
+                    <Input value="{objectModel>/idValue}" editable="{objectModel>/idEditable}" width="200px"/>
                     <Label text="{i18n>labelName}"/>
-                    <Input width="200px"/>
+                    <Input value="{objectModel>/nameValue}" editable="{objectModel>/nameEditable}" width="200px"/>
 
-                    <Button text="{i18n>btnCriar}" press="onCriar"/>
-                    <Button text="{i18n>btnEditar}" press="onEditar"/>
-                    <Button text="{i18n>btnSalvar}" press="onSalvar"/>
-                    <Button text="{i18n>btnExcluir}" press="onExcluir"/>
+                    <Button visible="{objectModel>/btnCriarVisible}" text="{i18n>btnCriar}" press="onCriar"/>
+                    <Button visible="{objectModel>/btnEditarVisible}" text="{i18n>btnEditar}" press="onEditar"/>
+                    <Button visible="{objectModel>/btnSalvarVisible}" text="{i18n>btnSalvar}" press="onSalvar"/>
+                    <Button visible="{objectModel>/btnExcluirVisible}" text="{i18n>btnExcluir}" press="onExcluir"/>
                 </VBox>
             </Panel>
         
