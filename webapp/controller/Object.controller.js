@@ -220,7 +220,7 @@ sap.ui.define([
                 this.getModel("objectModel").setProperty("/btnSalvarVisible", false);
                 this.getModel("objectModel").setProperty("/btnExcluirVisible", false);
 
-                this.getModel("objectModel").setProperty("/idEditable", true);
+                this.getModel("objectModel").setProperty("/idEditable", false);
                 this.getModel("objectModel").setProperty("/nameEditable", true);
 
                 this.getModel("objectModel").setProperty("/idValue", "");
@@ -229,6 +229,21 @@ sap.ui.define([
                 //remove o busy para o modo de criação
                 var oViewModel = this.getModel("objectView");
                 oViewModel.setProperty("/busy", false);
+
+                var that = this;
+
+                this.getModel().read("/Categories", {
+                    success:function(oData){
+                        var vmaior = 0;
+                        oData.results.forEach(function(line){
+                            if (line.ID > vmaior){
+                                vmaior = line.ID;
+                            }
+                        });
+                        vmaior = vmaior + 1;
+                        that.getModel("objectModel").setProperty("/idValue", vmaior);
+                    }
+                });
 
             } else {
                 //modo de exibição
