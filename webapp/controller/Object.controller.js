@@ -114,12 +114,42 @@ sap.ui.define([
         },
 
         onSalvar: function (){
-            //atualização de uma entrada (update) sapui5.hana.ondemand.com/#/api/sap.ui.model.odata.v2.ODataModel%23methods/update
-            
+           
         },
 
         onExcluir: function (){
-            //remoção (remove) https://sapui5.hana.ondemand.com/#/api/sap.ui.model.odata.v2.ODataModel%23methods/remove
+
+            var sId = this.getModel("objectModel").getProperty("/idValue");
+            var sMsgSucesso = this.getView().getModel("i18n").getResourceBundle().getText("msgSuccess");
+            var sMsgConfirm = this.getView().getModel("i18n").getResourceBundle().getText("msgConfirmDelete");
+            var sPath = "/Categories(" + sId + ")";
+
+            var that = this;
+
+            var fnExcluir = function(){
+                that.getModel().setUseBatch(false);
+
+                that.getModel().remove(sPath, {
+                    success: function(){
+                        MessageBox.success(sMsgSucesso, {
+                            onClose: function (oAction){
+                                history.go(-1);
+                            }
+                        });
+                    }, error: function (){
+    
+                    }
+                });
+            };
+
+            MessageBox.confirm(sMsgConfirm, {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                onClose: function (sAction) {
+                    if (sAction === MessageBox.Action.OK){
+                        fnExcluir();
+                    }
+                }
+            });
 
         },
 
