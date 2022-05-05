@@ -57,15 +57,7 @@ sap.ui.define([
          * If not, it will replace the current entry of the browser history with the worklist route.
          * @public
          */
-        onNavBack : function() {
-            var sPreviousHash = History.getInstance().getPreviousHash();
-            if (sPreviousHash !== undefined) {
-                // eslint-disable-next-line sap-no-history-manipulation
-                history.go(-1);
-            } else {
-                this.getRouter().navTo("worklist", {}, true);
-            }
-        },
+
 
         onCriar: function (){
             debugger;
@@ -103,6 +95,16 @@ sap.ui.define([
 
         },
 
+        onNavBack : function() {
+            var sPreviousHash = History.getInstance().getPreviousHash();
+            if (sPreviousHash !== undefined) {
+                // eslint-disable-next-line sap-no-history-manipulation
+                history.go(-1);
+            } else {
+                this.getRouter().navTo("worklist", {}, true);
+            }
+        },
+
         onEditar: function(){
             this.getModel("objectModel").setProperty("/idEditable", false);
             this.getModel("objectModel").setProperty("/nameEditable", true);
@@ -114,7 +116,52 @@ sap.ui.define([
         },
 
         onSalvar: function (){
-           
+            var sId = this.getModel("objectModel").getProperty("/idValue");
+            var sName = this.getModel("objectModel").getProperty("/nameValue");
+
+            var sMsgCampoVazio = this.getView().getModel("i18n").getResourceBundle().getText("msgCamposObrigatorios");
+            var sMsgSucesso = this.getView().getModel("i18n").getResourceBundle().getText("msgSuccess");
+            var sMsgConfirm = this.getView().getModel("i18n").getResourceBundle().getText("msgConfirmSave");
+
+            if (!sId || !sName){
+                MessageBox.error(sMsgCampoVazio);
+                return;
+            }
+
+            var iId = parseInt(sId);
+
+            var oPayload = {
+                ID : iId,
+                Name : sName
+            };
+
+            var that = this;
+
+            var fnAtualizar = function (){
+                that.getModel().setUseBatch(false);
+
+                that.getModel().update("/Categories(" + sId + ")", oPayload, {
+                    success: function (oRetorno) {
+                        MessageBox.success(sMsgSucesso, {
+                            onClose: function (oAction){
+                                history.go(-1);
+                            }
+                        });
+                    }, error: function (oRetorno){
+    
+                    }
+                });
+            };
+
+            MessageBox.confirm(sMsgConfirm, {
+                actions:  [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                onClose: function (sAction){
+                    if (sAction === MessageBox.Action.OK){
+                        fnAtualizar();
+                    }
+                }
+            });
+
         },
 
         onExcluir: function (){
