@@ -103,6 +103,26 @@ sap.ui.define([
 
         },
 
+        onEditar: function(){
+            this.getModel("objectModel").setProperty("/idEditable", false);
+            this.getModel("objectModel").setProperty("/nameEditable", true);
+
+            this.getModel("objectModel").setProperty("/btnCriarVisible", false);
+            this.getModel("objectModel").setProperty("/btnEditarVisible", false);
+            this.getModel("objectModel").setProperty("/btnSalvarVisible", true);
+            this.getModel("objectModel").setProperty("/btnExcluirVisible", false);
+        },
+
+        onSalvar: function (){
+            //atualização de uma entrada (update) sapui5.hana.ondemand.com/#/api/sap.ui.model.odata.v2.ODataModel%23methods/update
+            
+        },
+
+        onExcluir: function (){
+            //remoção (remove) https://sapui5.hana.ondemand.com/#/api/sap.ui.model.odata.v2.ODataModel%23methods/remove
+
+        },
+
         /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
