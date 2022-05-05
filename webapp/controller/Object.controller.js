@@ -77,8 +77,41 @@ sap.ui.define([
          * @private
          */
         _onObjectMatched : function (oEvent) {
-            var sObjectId =  oEvent.getParameter("arguments").objectId;
-            this._bindView("/Categories" + sObjectId);
+            var sObjectId = oEvent.getParameter("arguments").objectId;
+
+            if (sObjectId === "novo"){
+                //modo de criação
+            } else {
+                //modo de exibição
+                debugger;
+                this.getModel("objectModel").setProperty("/btnCriarVisible", false);
+                this.getModel("objectModel").setProperty("/btnEditarVisible", true);
+                this.getModel("objectModel").setProperty("/btnSalvarVisible", false);
+                this.getModel("objectModel").setProperty("/btnExcluirVisible", true);
+
+                this.getModel("objectModel").setProperty("/idEditable", false);
+                this.getModel("objectModel").setProperty("/nameEditable", false);
+
+                var that = this;
+                //leitura no oData
+                this.getModel().read("/Categories" + sObjectId, {
+                    success: function(oRetorno){
+                        debugger;
+                        var sId = oRetorno.ID;
+                        var sName = oRetorno.Name;
+
+                        that.getModel("objectModel").setProperty("/idValue",  sId);
+                        that.getModel("objectModel").setProperty("/nameValue", sName);
+
+                    }, error: function (oRetorno){
+                        debugger;
+                    }
+                });
+
+
+                this._bindView("/Categories" + sObjectId);
+            }
+
         },
 
         /**

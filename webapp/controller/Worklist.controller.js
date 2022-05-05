@@ -156,6 +156,12 @@ sap.ui.define([
             
         },
 
+        onCriar: function (){
+            this.getRouter().navTo("object", {
+                objectId: "novo"
+            });
+        },
+
         /**
          * Event handler for refresh event. Keeps filter, sort
          * and group settings and refreshes the list binding.
