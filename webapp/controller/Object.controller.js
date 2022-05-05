@@ -2,8 +2,9 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History",
-    "../model/formatter"
-], function (BaseController, JSONModel, History, formatter) {
+    "../model/formatter",
+    "sap/m/MessageBox"
+], function (BaseController, JSONModel, History, formatter, MessageBox) {
     "use strict";
 
     return BaseController.extend("categories.controller.Object", {
@@ -66,6 +67,42 @@ sap.ui.define([
             }
         },
 
+        onCriar: function (){
+            debugger;
+            var sId = this.getModel("objectModel").getProperty("/idValue");
+            var sName = this.getModel("objectModel").getProperty("/nameValue");
+
+            var sMsgCampoVazio = this.getView().getModel("i18n").getResourceBundle().getText("msgCamposObrigatorios");
+            var sMsgSucesso = this.getView().getModel("i18n").getResourceBundle().getText("msgSuccess");
+
+            if (!sId || !sName){
+                MessageBox.error(sMsgCampoVazio);
+                return;
+            }
+
+            var iId = parseInt(sId);
+
+            var oPayload = {
+                ID : iId,
+                Name : sName
+            };
+
+            this.getModel().setUseBatch(false);
+            
+            this.getModel().create("/Categories", oPayload, {
+                success: function (oRetorno){
+                    MessageBox.success(sMsgSucesso, {
+                        onClose: function (oAction){
+                            history.go(-1);
+                        }
+                    });
+                }, error: function (oRetorno){
+                    debugger;
+                }
+            });
+
+        },
+
         /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
@@ -81,6 +118,21 @@ sap.ui.define([
 
             if (sObjectId === "novo"){
                 //modo de criação
+                this.getModel("objectModel").setProperty("/btnCriarVisible", true);
+                this.getModel("objectModel").setProperty("/btnEditarVisible", false);
+                this.getModel("objectModel").setProperty("/btnSalvarVisible", false);
+                this.getModel("objectModel").setProperty("/btnExcluirVisible", false);
+
+                this.getModel("objectModel").setProperty("/idEditable", true);
+                this.getModel("objectModel").setProperty("/nameEditable", true);
+
+                this.getModel("objectModel").setProperty("/idValue", "");
+                this.getModel("objectModel").setProperty("/nameValue", "");
+
+                //remove o busy para o modo de criação
+                var oViewModel = this.getModel("objectView");
+                oViewModel.setProperty("/busy", false);
+
             } else {
                 //modo de exibição
                 debugger;
